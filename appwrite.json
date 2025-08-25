@@ -1,0 +1,23 @@
+{
+  "projectId": "68a4e3da0022f3e129d0",
+  "functions": [
+    {
+      "$id": "claude-bridge",
+      "name": "Claude Bridge Function",
+      "runtime": "node-18.0",
+      "execute": ["any"],
+      "events": [],
+      "schedule": "",
+      "timeout": 30,
+      "enabled": true,
+      "logging": true,
+      "entrypoint": "main.js",
+      "commands": "npm install",
+      "ignore": ["node_modules", ".git"],
+      "variables": {
+        "APPWRITE_FUNCTION_RUNTIME_NAME": "node-18.0",
+        "APPWRITE_FUNCTION_RUNTIME_VERSION": "18.0"
+      }
+    }
+  ]
+}

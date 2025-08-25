@@ -1,0 +1,21 @@
+{
+  "name": "claude-bridge-function",
+  "version": "1.0.0",
+  "description": "Appwrite Cloud Function to bridge super.appwrite.network to local Claude Code sessions",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "node-appwrite": "^13.0.0"
+  },
+  "keywords": [
+    "appwrite",
+    "claude",
+    "bridge",
+    "remote-development"
+  ],
+  "author": "Console Project",
+  "license": "MIT"
+}
