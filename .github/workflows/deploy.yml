@@ -1,0 +1,59 @@
+name: Deploy to Appwrite Functions
+
+on:
+  push:
+    branches: [main, master]
+
+env:
+  APPWRITE_ENDPOINT: https://cloud.appwrite.io/v1
+  APPWRITE_PROJECT_ID: 68a4e3da0022f3e129d0
+  APPWRITE_FUNCTION_ID: claude-bridge
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Appwrite CLI
+        run: |
+          npm install -g appwrite-cli@latest
+          
+      - name: Configure Appwrite CLI
+        run: |
+          appwrite client --endpoint ${{ env.APPWRITE_ENDPOINT }}
+          
+      - name: Login to Appwrite
+        env:
+          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
+        run: |
+          appwrite login --api-key
+          
+      - name: Deploy Function
+        run: |
+          # Create function if it doesn't exist
+          appwrite functions create \
+            --functionId=${{ env.APPWRITE_FUNCTION_ID }} \
+            --name="Claude Bridge Function" \
+            --runtime="node-18.0" \
+            --execute="[\"any\"]" \
+            --entrypoint="main.js" \
+            --commands="npm install" || true
+            
+          # Create deployment
+          appwrite functions createDeployment \
+            --functionId=${{ env.APPWRITE_FUNCTION_ID }} \
+            --entrypoint="main.js" \
+            --code="." \
+            --activate=true
+            
+      - name: Function Status
+        run: |
+          echo "✅ Function deployed successfully!"
+          echo "🔗 Function URL: https://${{ env.APPWRITE_PROJECT_ID }}.appwrite.global/functions/v1/${{ env.APPWRITE_FUNCTION_ID }}"
