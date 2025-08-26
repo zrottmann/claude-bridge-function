@@ -82,3 +82,4 @@ Test the function:
 ```bash
 curl https://68a4e3da0022f3e129d0.appwrite.global/functions/v1/claude-bridge/status
 ```# Trigger deployment
+# Auto-deploy test trigger
